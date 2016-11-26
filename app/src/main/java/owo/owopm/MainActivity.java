@@ -2,26 +2,18 @@ package owo.owopm;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.VisionServiceRestClient;
 import com.microsoft.projectoxford.vision.contract.AnalysisResult;
-import com.microsoft.projectoxford.vision.contract.Category;
-import com.microsoft.projectoxford.vision.contract.Face;
 import com.microsoft.projectoxford.vision.rest.VisionServiceException;
 
 import java.io.ByteArrayInputStream;
@@ -58,11 +50,18 @@ public class MainActivity extends AppCompatActivity {
         // grab from image we take picture of
         Bitmap myPackage = BitmapFactory.decodeResource(getResources(), R.drawable.owo);
 
+        TagsRequest tr = null;
         try {
-            new TagsRequest(myPackage).execute();
+            tr = new TagsRequest(myPackage);
+            tr.execute();
         } catch (Exception e) {
             Log.w("apiCall", e.getMessage());
         }
+        AnalysisResult result = null;
+        if(tr != null) {
+            result = tr.result;
+        }
+        
     }
 
     private String process(Bitmap myBitmap) throws VisionServiceException, IOException {
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             // Store error message
             private Exception e = null;
             private Bitmap myBitmap;
-            private AnalysisResult result;
+            public AnalysisResult result;
         public TagsRequest(Bitmap myBitmap){
             this.myBitmap = myBitmap;
         }
