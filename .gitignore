@@ -5,3 +5,5 @@
 .DS_Store
 /build
 /captures
+apikey.xml
+/app/src/main/res/values/apikey.xml

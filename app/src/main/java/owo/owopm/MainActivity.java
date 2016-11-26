@@ -19,7 +19,7 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.microsoft.projectoxford.vision.VisionServiceClient;
 import com.microsoft.projectoxford.vision.VisionServiceRestClient;
-import com.microsoft.projectoxford.vision.contract.AnalyzeResult;
+import com.microsoft.projectoxford.vision.contract.AnalysisResult;
 import com.microsoft.projectoxford.vision.contract.Category;
 import com.microsoft.projectoxford.vision.contract.Face;
 import com.microsoft.projectoxford.vision.rest.VisionServiceException;
@@ -29,22 +29,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-
-    // Flag to indicate which task is to be performed.
-    private static final int REQUEST_SELECT_IMAGE = 0;
-
-    // The button to select an image
-    private Button mButtonSelectImage;
-
-    // The URI of the image selected to detect.
-    private Uri mImageUri;
-
-    // The image selected to detect.
-    private Bitmap mBitmap;
-
-    // The edit to show status and result.
-    private EditText mEditText;
-
     private VisionServiceClient client;
 
     @Override
@@ -66,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if (client==null){
             client = new VisionServiceRestClient("f871c0afcfb74f5b97d47473bec35725");
         }
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kat);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.owo);
         doAnalyze();
     }
 
@@ -81,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
     private String process() throws VisionServiceException, IOException {
         Gson gson = new Gson();
-        String[] features = {"ImageType", "Color", "Faces", "Adult", "Categories"};
+        String[] features = {"Tags"};
 
         // Put the image into an input stream for detection.
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
-        AnalyzeResult v = this.client.analyzeImage(inputStream, features);
+        AnalysisResult v = this.client.analyzeImage(inputStream, features, null);
 
         String result = gson.toJson(v);
         Log.d("result", result);
@@ -123,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 this.e = null;
             } else {
                 Gson gson = new Gson();
-                AnalyzeResult result = gson.fromJson(data, AnalyzeResult.class);
+                AnalysisResult result = gson.fromJson(data, AnalysisResult.class);
             }
 
         }
