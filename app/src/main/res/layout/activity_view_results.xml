@@ -9,4 +9,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="owo.owopm.ViewResults">
 
+
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/videoView"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+
+
+        />
+
 </RelativeLayout>
