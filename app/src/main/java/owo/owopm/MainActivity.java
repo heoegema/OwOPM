@@ -30,13 +30,16 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private VisionServiceClient client;
+    private String apiKey;
+
+    public MainActivity() {
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,30 +49,29 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        apiKey = getResources().getString(R.string.api_key);
 
-        if (client==null){
-            client = new VisionServiceRestClient("f871c0afcfb74f5b97d47473bec35725");
+        if (client == null) {
+            client = new VisionServiceRestClient(apiKey);
         }
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.owo);
-        doAnalyze();
-    }
 
-    public void doAnalyze() {
+        // grab from image we take picture of
+        Bitmap myPackage = BitmapFactory.decodeResource(getResources(), R.drawable.owo);
 
         try {
-            new doRequest().execute();
-        } catch (Exception e)
-        {
+            new TagsRequest(myPackage).execute();
+        } catch (Exception e) {
+            Log.w("apiCall", e.getMessage());
         }
     }
 
-    private String process() throws VisionServiceException, IOException {
+    private String process(Bitmap myBitmap) throws VisionServiceException, IOException {
         Gson gson = new Gson();
         String[] features = {"Tags"};
 
         // Put the image into an input stream for detection.
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(output.toByteArray());
 
         AnalysisResult v = this.client.analyzeImage(inputStream, features, null);
@@ -80,58 +82,43 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    private class doRequest extends AsyncTask<String, String, String> {
-        // Store error message
-        private Exception e = null;
+    private void finishCall(AnalysisResult result) {
+        Log.w("finishCall", result.toString());
+    }
 
-        public doRequest() {
+    private class TagsRequest extends AsyncTask<String, String, String> {
+            // Store error message
+            private Exception e = null;
+            private Bitmap myBitmap;
+            private AnalysisResult result;
+        public TagsRequest(Bitmap myBitmap){
+            this.myBitmap = myBitmap;
+        }
+
+        public AnalysisResult getResult() {
+            return result;
         }
 
         @Override
         protected String doInBackground(String... args) {
             try {
-                return process();
+                return process(myBitmap);
             } catch (Exception e) {
-                this.e = e;    // Store error
+                Log.w("doRequest", e.getMessage());
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(String data) {
             super.onPostExecute(data);
-            // Display based on error existence
 
             if (e != null) {
                 this.e = null;
             } else {
                 Gson gson = new Gson();
-                AnalysisResult result = gson.fromJson(data, AnalysisResult.class);
+                finishCall(gson.fromJson(data, AnalysisResult.class));
             }
-
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
