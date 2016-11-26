@@ -2,7 +2,9 @@ package owo.owopm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.media.audiofx.BassBoost;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -14,12 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.VideoView;
+import android.widget.Button;
 
 
 
 public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_START_CAMERA_APP = 0;
     private ImageView mPhotoCapturedImageView;
+    private VideoView mVideoView;
+    private Button mButton;
+    private Button mGetResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mPhotoCapturedImageView= (ImageView) findViewById(R.id.capturePhotoImageView);
+        mVideoView = (VideoView) findViewById(R.id.videoView);
+        mButton = (Button) findViewById(R.id.photoButton);
+        mGetResults = (Button) findViewById(R.id.viewResults);
+
 
 
     }
@@ -80,8 +91,38 @@ public class MainActivity extends AppCompatActivity {
             mPhotoCapturedImageView.setImageBitmap(photoCapturedBitmap);
 
             Toast.makeText(this, "OwO What's this?", Toast.LENGTH_SHORT).show();
+
+            //Want to load the new screen/activity with our loading screen
+
         }
 
+
+        mPhotoCapturedImageView.setVisibility(View.GONE);
+        mVideoView.setVisibility(View.VISIBLE);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.elephanttrunk);
+        mVideoView.setVideoURI(uri);
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mVideoView.start();
+            }
+        });
+        mButton.setVisibility(View.GONE);
+        mGetResults.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+    }
+    public void ViewResults(View view) {
+
+            //do when we click the get results button
+
+        Intent intent = new Intent(this, ViewResults.class);
+
+        startActivity(intent);
 
     }
 

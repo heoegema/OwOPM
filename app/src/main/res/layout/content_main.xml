@@ -33,8 +33,32 @@
         android:textColor="@android:color/background_light"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Out My Package >wO"
+        android:id="@+id/viewResults"
+        android:onClick="ViewResults"
+        android:layout_marginBottom="45dp"
+        android:layout_alignParentBottom="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:fontFamily="casual"
+        android:textColorLink="@color/colorAccent"
+        android:textColor="@android:color/background_light"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true" />
 
 
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/videoView"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+
+
+        />
 
 
     <ImageView
