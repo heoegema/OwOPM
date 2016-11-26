@@ -10,5 +10,26 @@
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
     <TextView android:text="OwO, what's this?" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan Package"
+        android:id="@+id/photoButton"
+        android:onClick="takePicture"
+        android:layout_marginBottom="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
+    <ImageView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/capturePhotoImageView"
+        android:layout_above="@+id/photoButton"
+
+    />
 </RelativeLayout>
+
