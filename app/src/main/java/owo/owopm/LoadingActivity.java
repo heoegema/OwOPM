@@ -28,11 +28,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class LoadingActivity extends AppCompatActivity {
     private VisionServiceClient client;
     private String apiKey;
 
-    public MainActivity() {
+    public LoadingActivity() {
     }
 
 
