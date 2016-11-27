@@ -16,8 +16,6 @@ public class ViewResults extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.Results);
         Intent intent = getIntent();
         String message = intent.getStringExtra(Loading.EXTRA_MESSAGE);
-
-        mTextView.setTextSize(40);
         mTextView.setText(message);
     }
 

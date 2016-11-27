@@ -14,9 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/Results"
-
-
-
+        android:textColor="@color/HotPink"
+        android:fontFamily="casual"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
 
     />
     <ImageView
@@ -28,17 +30,22 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+
     <Button
-        android:text="check out new bulge :3c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="check out new bulge :3c"
         android:id="@+id/returnButton"
-        android:textAllCaps="false"
-        android:onClick="GoBack"
-        android:textColor="@android:color/white"
+        android:onClick="takePicture"
+        android:layout_marginBottom="45dp"
+        android:layout_alignParentBottom="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:fontFamily="casual"
         android:background="@android:color/holo_purple"
-        android:layout_marginBottom="55dp"
-        android:layout_alignBottom="@+id/videoView"
+        android:textColorLink="@color/colorAccent"
+        android:textColor="@android:color/background_light"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
