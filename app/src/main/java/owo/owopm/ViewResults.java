@@ -1,28 +1,46 @@
 package owo.owopm;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.VideoView;
+import android.widget.TextView;
+
 
 public class ViewResults extends AppCompatActivity {
-    private VideoView mVideoView;
+    private TextView mTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_results);
+        setContentView(R.layout.activity_view_results2);
+        mTextView = (TextView) findViewById(R.id.Results);
+        DisplayResult(1);
+    }
 
-        mVideoView = (VideoView) findViewById(R.id.videoView);
-        mVideoView.setVisibility(View.VISIBLE);
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.elephanttrunk);
-        mVideoView.setVideoURI(uri);
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mVideoView.start();
-            }
-        });
+    //we want a way to view results-> need to push through from other thing in this case
+
+    //On button click
+    public void GoBack(View view) {
+        //want to give option to go back
+
+        Intent intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
+
+
+
+    }
+
+    public void DisplayResult(int val) {
+
+        //append various values depending on the integer value
+        if(val == 1) {
+
+
+        }
+
+
+
+
     }
 }
