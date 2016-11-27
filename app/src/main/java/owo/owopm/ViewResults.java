@@ -14,7 +14,11 @@ public class ViewResults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_results2);
         mTextView = (TextView) findViewById(R.id.Results);
-        DisplayResult(1);
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(Loading.EXTRA_MESSAGE);
+
+        mTextView.setTextSize(40);
+        mTextView.setText(message);
     }
 
     //we want a way to view results-> need to push through from other thing in this case
@@ -31,16 +35,5 @@ public class ViewResults extends AppCompatActivity {
 
     }
 
-    public void DisplayResult(int val) {
 
-        //append various values depending on the integer value
-        if(val == 1) {
-
-
-        }
-
-
-
-
-    }
 }

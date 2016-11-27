@@ -98,7 +98,7 @@ public class Loading extends AppCompatActivity {
     private void finishCall(AnalysisResult result) {
         Log.w("finishCall", result.toString());
         Intent intent = new Intent(this, ViewResults.class);
-        String message = "";
+        String message = "Hehe XD";
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
 
