@@ -28,7 +28,7 @@ public class Loading extends AppCompatActivity {
     private VisionServiceClient client;
     private VideoView mVideoView;
     private String apiKey;
-
+    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +74,8 @@ public class Loading extends AppCompatActivity {
             result = tr.result;
         }
 
+
+
     }
 
     private String process(Bitmap myBitmap) throws VisionServiceException, IOException {
@@ -95,6 +97,11 @@ public class Loading extends AppCompatActivity {
 
     private void finishCall(AnalysisResult result) {
         Log.w("finishCall", result.toString());
+        Intent intent = new Intent(this, ViewResults.class);
+        String message = "";
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
     }
 
     private class TagsRequest extends AsyncTask<String, String, String> {
