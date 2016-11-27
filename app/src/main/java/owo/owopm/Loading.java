@@ -24,6 +24,9 @@ import java.io.IOException;
 import android.util.Log;
 import android.content.Intent;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Loading extends AppCompatActivity {
     private VisionServiceClient client;
     private VideoView mVideoView;
@@ -80,7 +83,7 @@ public class Loading extends AppCompatActivity {
 
     private String process(Bitmap myBitmap) throws VisionServiceException, IOException {
         Gson gson = new Gson();
-        String[] features = {"Tags"};
+        String[] features = {"Tags", "Adult"};
 
         // Put the image into an input stream for detection.
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -98,10 +101,44 @@ public class Loading extends AppCompatActivity {
     private void finishCall(AnalysisResult result) {
         Log.w("finishCall", result.toString());
         Intent intent = new Intent(this, ViewResults.class);
-        String message = "Hehe XD";
+        String message = getRating(result);
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
 
+    public String getRating(AnalysisResult result) {
+        int rank = 0;
+//        if(result.adult.isAdultContent || result.adult.isRacyContent) {
+//            rank += 2;
+//        }
+        for(int i = 0; i < result.tags.size(); i++) {
+            String tagName = result.tags.get(i).name;
+            if(tagName.equals("people")) {
+                rank ++;
+            }
+            if(tagName.equals("underwear")) {
+                rank ++;
+            }
+            if(tagName.equals("people")) {
+                rank ++;
+            }
+        }
+        rank = min(max(1, rank), 5);
+        switch (rank) {
+            case 0:
+                return "\"Owo what IZ this?? No packagez found\" ¯\\_ツ_/¯";
+            case 1:
+                return "UwU look at thiz smol n tiny n precious package I will protect and love it UwU";
+            case 2:
+                return "hee hee :3c *nuzzles* *notices somthing* Owo what is?";
+            case 3:
+                return "O3O omG this iz a Nooice Peace of HardWare :3 :3 :3";
+            case 4:
+                return "hehe your a cutie x3c *flops beside u and nuzzles* *notices youre buldge* OwO whats this?!";
+            case 5:
+                return "OwO ZoMG WOWZERS is ThiS ALL For me Daddy o////o!? Thankies! *pounces on your buldge*";
+        }
+        return "";
     }
 
     private class TagsRequest extends AsyncTask<String, String, String> {
@@ -139,9 +176,4 @@ public class Loading extends AppCompatActivity {
             }
         }
     }
-
-
-
-
-
 }

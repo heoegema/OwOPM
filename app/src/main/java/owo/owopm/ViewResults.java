@@ -17,6 +17,7 @@ public class ViewResults extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(Loading.EXTRA_MESSAGE);
         mTextView.setText(message);
+
     }
 
     //we want a way to view results-> need to push through from other thing in this case
