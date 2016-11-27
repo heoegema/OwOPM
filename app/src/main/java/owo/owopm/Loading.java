@@ -108,12 +108,15 @@ public class Loading extends AppCompatActivity {
 
     public String getRating(AnalysisResult result) {
         int rank = 0;
-//        if(result.adult.isAdultContent || result.adult.isRacyContent) {
-//            rank += 2;
-//        }
+        if(result.adult.isAdultContent || result.adult.isRacyContent) {
+            rank += 2;
+        }
         for(int i = 0; i < result.tags.size(); i++) {
             String tagName = result.tags.get(i).name;
             if(tagName.equals("people")) {
+                rank ++;
+            }
+            if(tagName.equals("person")) {
                 rank ++;
             }
             if(tagName.equals("underwear")) {
@@ -123,7 +126,7 @@ public class Loading extends AppCompatActivity {
                 rank ++;
             }
         }
-        rank = min(max(1, rank), 5);
+        rank = min(max(0, rank), 5);
         switch (rank) {
             case 0:
                 return "\"Owo what IZ this?? No packagez found\" ¯\\_ツ_/¯";
