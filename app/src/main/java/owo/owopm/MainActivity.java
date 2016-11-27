@@ -20,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mPhotoCapturedImageView;
     private Button mButton;
     private Button mGetResults;
-
+    private Bitmap mPhotoCapturedBitmap;
+    private Bundle extras;
+    private static final int BITMAP_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == ACTIVITY_START_CAMERA_APP && resultCode == RESULT_OK) {
             //Toast.makeText(this, "OwO What's this?", Toast.LENGTH_SHORT).show();
-            Bundle extras = data.getExtras();
-            Bitmap photoCapturedBitmap = (Bitmap) extras.get("data");
-            mPhotoCapturedImageView.setImageBitmap(photoCapturedBitmap);
+            extras = data.getExtras();
+            mPhotoCapturedBitmap = (Bitmap) extras.get("data");
+            mPhotoCapturedImageView.setImageBitmap(mPhotoCapturedBitmap);
 
             Toast.makeText(this, "OwO What's this?", Toast.LENGTH_SHORT).show();
 
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     public void ViewResults(View view) {
 
         Intent intent = new Intent(this, Loading.class);
-
+        intent.putExtra("Image", mPhotoCapturedBitmap);
         startActivity(intent);
 
     }
